@@ -4,6 +4,7 @@
 #include "exception.hh"
 
 #include <memory>
+#include <cstdint>
 #include <stdexcept>
 #include <string>
 #include <typeinfo>
