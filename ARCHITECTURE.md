@@ -148,4 +148,5 @@ minnow 实现了"正确性主干"（可靠、有序、序号、重组、流量�
 每个模块的实现细节单独成文，放在 `docs/` 目录，避免架构文档臃肿：
 
 - [Reassembler](docs/reassembler.md) —— 乱序重组（check1）
-- （ByteStream / TCPReceiver / TCPSender 等模块随 checkpoint 补充）
+- [WrappingInt32](docs/wrapping_integers.md) —— 序号回绕换算（check2）
+- [TCPReceiver](docs/tcp_receiver.md) —— 接收端（check2）
