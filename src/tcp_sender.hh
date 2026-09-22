@@ -5,11 +5,8 @@
 #include "tcp_sender_message.hh"
 
 #include <cstdint>
+#include <deque>
 #include <functional>
-#include <list>
-#include <memory>
-#include <optional>
-#include <queue>
 
 class TCPSender
 {
@@ -44,8 +41,27 @@ public:
   const Reader& reader() const { return input_.reader(); }
 
 private:
+  struct OutstandingMessage
+  {
+    TCPSenderMessage message {};
+    uint64_t end_seqno {};
+  };
+
   // Variables initialized in constructor
   ByteStream input_;
   Wrap32 isn_;
   uint64_t initial_RTO_ms_;
+
+  uint64_t next_seqno_ {};
+  uint64_t acked_seqno_ {};
+  uint16_t receiver_window_size_ { 1 };
+
+  bool syn_sent_ {};
+  bool fin_sent_ {};
+
+  std::deque<OutstandingMessage> outstanding_ {};
+
+  uint64_t timer_elapsed_ms_ {};
+  uint64_t current_RTO_ms_ { initial_RTO_ms_ };
+  uint64_t consecutive_retransmissions_ {};
 };
